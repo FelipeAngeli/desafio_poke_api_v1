@@ -1,3 +1,4 @@
+import 'package:desafio_poke_api/views/pokemon_llist_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class PokemonApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: const PokemonListView(),
+      home: const PokemonListView(),
     );
   }
 }
