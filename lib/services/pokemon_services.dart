@@ -15,7 +15,7 @@ class PokemonService {
   Uri _buildPokemonListUri() => Uri.https(
         _baseDomain,
         _pokemonListPath,
-        {'limite': _defaultLimit.toString()},
+        {'limit': _defaultLimit.toString()},
       );
 
   Future<List<PokemonModels>> fetchPokemonList() async {
@@ -23,7 +23,7 @@ class PokemonService {
       final response = await _client.get(_buildPokemonListUri());
 
       if (response.statusCode != 200) {
-        throw PokemonException('Status de resposta de API inesperado: ${response.statusCode}');
+        throw PokemonException('Status de resposta inesperado da API: ${response.statusCode}');
       }
 
       final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
@@ -55,5 +55,27 @@ class PokemonService {
     } catch (_) {
       return summary;
     }
+  }
+
+  Future<PokemonModels> fetchPokemonDetails(PokemonModels summary) async {
+    return _fetchPokemonDetails(summary);
+  }
+
+  Future<List<PokemonModels>> fetchAllPokemonSummaries() async {
+    final uri = Uri.https(
+      _baseDomain,
+      _pokemonListPath,
+      {'limit': '100000'},
+    );
+    final response = await _client.get(uri);
+
+    if (response.statusCode != 200) {
+      throw PokemonException('Status de resposta de API inesperado: ${response.statusCode}');
+    }
+
+    final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+    final List<dynamic> results = data['results'];
+
+    return results.map((json) => PokemonModels.fromSummaryJson(json as Map<String, dynamic>)).toList();
   }
 }

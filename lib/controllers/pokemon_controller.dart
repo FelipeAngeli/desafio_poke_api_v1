@@ -25,12 +25,21 @@ class PokemonController extends ChangeNotifier {
     }
   }
 
-  void filterPokemons(String query) {
+  Future<void> filterPokemons(String query) async {
     if (query.isEmpty) {
       filteredPokemons = List<PokemonModels>.from(allPokemons);
     } else {
-      filteredPokemons =
-          allPokemons.where((pokemon) => pokemon.name.toLowerCase().contains(query.toLowerCase())).toList();
+      try {
+        final allSummaries = await _service.fetchAllPokemonSummaries();
+        final filteredSummaries =
+            allSummaries.where((pokemon) => pokemon.name.toLowerCase().contains(query.toLowerCase())).toList();
+        filteredPokemons = await Future.wait(filteredSummaries.map((summary) async {
+          return await _service.fetchPokemonDetails(summary);
+        }));
+      } catch (e) {
+        debugPrint('Error filtering Pokémon: $e');
+        filteredPokemons = [];
+      }
     }
     notifyListeners();
   }
