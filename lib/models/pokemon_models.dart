@@ -2,33 +2,34 @@ class PokemonModels {
   final String name;
   final String url;
   final int? height;
-  final int? wigth;
+  final int? weight;
   final int? baseExperience;
 
   PokemonModels({
     required this.name,
     required this.url,
     this.height,
-    this.wigth,
+    this.weight,
     this.baseExperience,
   });
 
-  factory PokemonModels.fromJson(Map<String, dynamic> json) {
+  factory PokemonModels.fromSummaryJson(Map<String, dynamic> json) {
     return PokemonModels(
-      name: json['name'],
-      url: json['url'],
-      height: json['height'],
-      wigth: json['wigth'],
-      baseExperience: json['base_experience'],
+      name: json['name'] as String,
+      url: json['url'] as String,
+      height: null,
+      weight: null,
+      baseExperience: null,
     );
   }
 
+  /// Cria um Pokémon detalhado a partir de um JSON.
   factory PokemonModels.fromDetailJson(Map<String, dynamic> json, String summaryUrl) {
     return PokemonModels(
       name: json['name'] as String,
       url: summaryUrl,
       height: json['height'] as int,
-      wigth: json['weight'] as int,
+      weight: json['weight'] as int,
       baseExperience: json['base_experience'] as int,
     );
   }
