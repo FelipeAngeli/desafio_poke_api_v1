@@ -23,7 +23,6 @@ class PokemonModels {
     );
   }
 
-  /// Cria um Pokémon detalhado a partir de um JSON.
   factory PokemonModels.fromDetailJson(Map<String, dynamic> json, String summaryUrl) {
     return PokemonModels(
       name: json['name'] as String,
