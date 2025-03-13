@@ -35,7 +35,6 @@ Este projeto é um desafio que consome a Poke API para exibir informações sobr
 
 - Flutter SDK
 - HTTP package
-- Provider package
 
 ## Estrutura de Pastas
 
