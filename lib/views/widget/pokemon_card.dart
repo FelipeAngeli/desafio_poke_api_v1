@@ -20,7 +20,7 @@ class PokemonCard extends StatelessWidget {
     return '${pokemon.name[0].toUpperCase()}${pokemon.name.substring(1)}';
   }
 
-  _buildDetails() {
+  Widget _buildDetails() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,11 +37,14 @@ class PokemonCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       elevation: 4,
       child: ListTile(
-        leading: Image.network(
-          pokemon.imageUrl,
+        leading: SizedBox(
           width: 64,
           height: 64,
-          fit: BoxFit.cover,
+          child: Image.network(
+            pokemon.imageUrl,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
+          ),
         ),
         title: Text(
           _formattedName,

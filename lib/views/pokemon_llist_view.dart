@@ -37,8 +37,8 @@ class _PokemonListViewState extends State<PokemonListView> {
     await _controller.loadPokemons();
   }
 
-  void _onSearchChanged(String query) {
-    _controller.filterPokemons(query);
+  Future<void> _onSearchChanged(String query) async {
+    await _controller.filterPokemons(query);
   }
 
   void _onPokemonSelected(String pokemonId, bool isSelected) {
@@ -57,10 +57,12 @@ class _PokemonListViewState extends State<PokemonListView> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: const InputDecoration(
-                labelText: 'Search',
+                labelText: 'Pesquisar',
                 border: OutlineInputBorder(),
               ),
-              onChanged: _onSearchChanged,
+              onChanged: (query) async {
+                await _onSearchChanged(query);
+              },
             ),
           ),
           // Lista de Pokémons
@@ -68,7 +70,7 @@ class _PokemonListViewState extends State<PokemonListView> {
             child: _controller.isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _controller.filteredPokemons.isEmpty
-                    ? const Center(child: Text('No Pokémon found'))
+                    ? const Center(child: Text('Nem um Pokémon encontrado'))
                     : ListView.builder(
                         itemCount: _controller.filteredPokemons.length,
                         itemBuilder: (context, index) {
