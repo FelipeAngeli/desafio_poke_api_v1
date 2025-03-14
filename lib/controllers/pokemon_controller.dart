@@ -37,7 +37,7 @@ class PokemonController extends ChangeNotifier {
           return await _service.fetchPokemonDetails(summary);
         }));
       } catch (e) {
-        debugPrint('Error filtering Pokémon: $e');
+        debugPrint('Erro ao filtrar Pokémon: $e');
         filteredPokemons = [];
       }
     }
