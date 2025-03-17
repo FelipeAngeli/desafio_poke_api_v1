@@ -4,13 +4,15 @@ class PokemonModels {
   final int? height;
   final int? weight;
   final int? baseExperience;
+  final List<String> types;
 
-  PokemonModels({
+  const PokemonModels({
     required this.name,
     required this.url,
     this.height,
     this.weight,
     this.baseExperience,
+    this.types = const [],
   });
 
   factory PokemonModels.fromSummaryJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class PokemonModels {
       height: null,
       weight: null,
       baseExperience: null,
+      types: const [],
     );
   }
 
@@ -30,6 +33,7 @@ class PokemonModels {
       height: json['height'] as int,
       weight: json['weight'] as int,
       baseExperience: json['base_experience'] as int,
+      types: (json['types'] as List).map((item) => item['type']['name'] as String).toList(),
     );
   }
 
